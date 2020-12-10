@@ -11,16 +11,28 @@ This python project for my third continuous assessment at Exeter University uses
   * JSON
   * Math
   * Time
+<<<<<<< HEAD
   * Sched
 
 ## Configuration
 The use of APIs in this project requires you to register for and use API keys, the config for which can be found in the config.json file, I have left my API keys in for testing purposes.
+=======
+  * Logging
+  * Sched
+
+## Configuration
+The use of APIs in this project requires you to register for and use API keys, the config for which can be found in the config.json file.
+>>>>>>> 6e064123c971426d615684aed2797a6a0d0c7329
 
 You should get API keys from:
 * [NewsAPI](https://newsapi.org/)
 * [Open Weather Map](https://openweathermap.org/)
 
+<<<<<<< HEAD
 Also in the config.json file is the location info that the program will use for weather
+=======
+Also in the config.json file is the location info that the program will use for weather and the filepath of the logfile
+>>>>>>> 6e064123c971426d615684aed2797a6a0d0c7329
 
 ```JSON
 {
@@ -59,4 +71,8 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+<<<<<<< HEAD
 SOFTWARE.
+=======
+SOFTWARE.
+>>>>>>> 6e064123c971426d615684aed2797a6a0d0c7329
