@@ -1,0 +1,13 @@
+{
+"API-keys":{
+    "weather" : "88d1142a10ea7a4119f266192524ff79",
+    "news" : "d72e827732f14b0aaaf7ed98e26daeba"
+},
+"location-info":{
+    "city" : "Exeter",
+    "country" : "UK"
+},
+"filepaths":{
+    "logfile" : "program.log"
+}
+}
