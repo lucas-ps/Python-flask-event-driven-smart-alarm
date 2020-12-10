@@ -1,6 +1,7 @@
 import json
 import requests
 import math
+import logging
 
 with open('config.json', 'r') as f:
     config = json.load(f)
@@ -17,6 +18,7 @@ def get_news(country : str = 'gb', tts : bool = False) -> list:
         articles = news.json()['articles']
         ten_articles = []
         #print (articles)
+        logging.debug("News articles successfully fetched")
         for i in range(10):
             title = articles[i]['title']
             url = articles[i]['url']
@@ -31,7 +33,9 @@ def get_news(country : str = 'gb', tts : bool = False) -> list:
         else:    
             return ten_articles
     except ConnectionError:
-        return ('Connection error while fetching articles, check to see if link is still working or if API is down')
+        error = ("Connection error while fetching articles, check to see if link is still working or if API is down")
+        logging.error(error)
+        return error
 
 def get_weather(city : str, country : str, tts : bool = False) -> dict:
     ''' Returns a formatted string with the current weather data for the City/Country provided '''
@@ -43,15 +47,18 @@ def get_weather(city : str, country : str, tts : bool = False) -> dict:
         temp = weather.json()['main']['temp']
         temp = math.floor(float(temp))
         temp -= 273
+        logging.debug("Weather data successfully fetched")
         if tts:
             formatted_for_tts = (". Today the weather is "+condition+' , it is '+str(temp)+" degrees. ")
             return formatted_for_tts
         else:
             formatted_str = (str(temp)+'°C, '+condition)
             return formatted_str
-    except ConnectionError:
-        return ('Connection error while fetching articles, check to see if link is still working or if API is down')
 
+    except ConnectionError:
+        error = ("Connection error while fetching weather, check to see if link is still working or if API is down")
+        logging.error(error)
+        return error
 def get_covid_data() ->dict:
     ''' Returns yesterday's covid data including total cases, cases yesterday, cases today '''
     try:
@@ -64,10 +71,12 @@ def get_covid_data() ->dict:
         new_cases_yesterday = yesterday['newCasesByPublishDate']
         total_cases_so_far = today['cumCasesByPublishDate']
         formatted_str = (str(new_cases_today)+" new cases today</br>"+str(new_cases_yesterday)+" new cases yesterday</br>"+str(total_cases_so_far)+' total cases so far')
+        logging.debug("Covid-19 data successfully fetched")
         return formatted_str
     except ConnectionError:
-        return ('Connection error while fetching covid data, check to see if link is still working or if API is down')
-        
+        error = ("Connection error while fetching covid data, check to see if link is still working or if API is down")
+        logging.error(error)
+        return error        
 
 #print(get_covid_data())
 #print(get_weather(city, country))

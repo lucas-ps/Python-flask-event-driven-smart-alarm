@@ -2,6 +2,7 @@ from datetime import datetime
 import notifications
 import pyttsx3
 import json
+import logging
 
 with open('config.json', 'r') as f:
     config = json.load(f)
@@ -23,15 +24,15 @@ def create_announcment(scheduler, date, time, content, alarm_weather = False, al
     alarm_time = datetime.strptime(date + ' ' + time, '%Y-%m-%d %H:%M')
     delay_in_seconds = delay(alarm_time, current_time)
     scheduler.enter(delay_in_seconds, 1, ttsannouncement, (content,))
-    print("Alarm for "+date,time+" has been added to scheduler")
+    logging.info("Alarm for "+date,time+" has been added to scheduler")
     if alarm_weather:
         tts_announcement = notifications.get_weather(city, country, True)
         content = (content + tts_announcement)
-        print("Weather brief for "+date,time+" has been added to scheduler")
+        logging.info("Weather brief for "+date,time+" has been added to scheduler")
     if alarm_news:
         tts_announcement = notifications.get_news('gb', True)
         content = (content + tts_announcement)
-        print("News brief for "+date,time+" has been added to scheduler")
+        logging.info("News brief for "+date,time+" has been added to scheduler")
     scheduler.enter(delay_in_seconds, 1, ttsannouncement, (content,))
 
 
@@ -40,8 +41,8 @@ def ttsannouncement(content : str):
     try:
         engine.endLoop()
     except RuntimeError:
-        print("Error while using endLoop() for pytts3, there is no currently running loop")
+        logging.warning("Error while using endLoop() for pytts3, there is no currently running loop")
         pass
     engine.say(content)
     engine.runAndWait()
-    #print (content)
+    logging.info("PYTTSx3 successfully output :"+content)

@@ -3,6 +3,7 @@ from datetime import datetime
 from alarm import create_announcment, delay
 from time import sleep, mktime
 
+import logging
 import json
 import math
 import time
@@ -11,6 +12,11 @@ import notifications as api
 
 app = Flask(__name__)
 s = sched.scheduler(time.time, time.sleep)
+
+with open('config.json', 'r') as f:
+    config = json.load(f)
+    log_filepath = config["filepaths"]["logfile"]
+logging.basicConfig(filename=log_filepath, encoding='utf-8', level=logging.DEBUG)
 
 alarms = []
 notifications = []
@@ -55,16 +61,16 @@ def index():
         for event in s.queue:
             if math.ceil(event.time) == scheduler_time:
                 s.cancel(event)
-                print('Alarm for '+alarm_name+' removed from scheduler')
+                logging.info('Alarm for '+alarm_name+' removed from scheduler')
                 
     except ValueError:
-        print('No alarm removal parameters provided')
+        logging.debug('No alarm removal parameters provided')
         pass
 
     notification_name = request.args.get("notif")
     for notification in range(len(notifications)): 
         if notifications[notification]['title'] == notification_name: 
-            print ('Notification "'+notification_name+'" has been removed from notification list')
+            logging.info ('Notification "'+notification_name+'" has been removed from notification list')
             del notifications[notification] 
             break
     
@@ -80,9 +86,6 @@ def index():
     alarm_weather = request.args.get("weather")
     alarm_news = request.args.get("news")
 
-    print (alarm_weather)
-    print (alarm_news)
-
     try:
         time = alarm_time.split("T") [1]
         date = alarm_time.split("T") [0]
@@ -91,13 +94,13 @@ def index():
             if alarms[i]['title'] == title:
                 temp = {'title' : 'Unable to create alarm "'+alarm_content+'"','content' :'There was already an alarm set for the time you selected'}
                 notifications.insert(0, temp)
-                return render_template('index.html', title='CA3 Alarm clock', notifications=notifications, alarms=alarms, image='bingus.jpg')
+                return render_template('index.html', title='CA3 Alarm clock', notifications=notifications, alarms=alarms, image='image.jpg')
 
         temp = {"title" : title, "content" : alarm_content, "weather" : alarm_weather, "news" : alarm_news}  
         create_announcment(s, date, time, alarm_content, alarm_weather, alarm_news)
         alarms.append(temp)    
     except AttributeError:
-        print("No alarm creation parameters provided")
+        logging.debug("No alarm creation parameters provided")
         pass
 
     return render_template('index.html', title='CA3 Alarm clock', notifications=notifications, alarms=alarms, image='image.png')
