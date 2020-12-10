@@ -1,6 +1,6 @@
 # Smart Alarm CA3
 
-This python project for my third continuous assessment at Exeter University uses flask in python to make an event driven 'smart alarm' website which integrates current news, weather and COVID-19 data using free APIs
+This python project for my third continuous assessment at Exeter University uses flask in python to make an event driven 'smart alarm' website which integrates current news, weather and COVID-19 data using free APIs. Hosted at: https://github.com/lucas-ps/CA3-Smart-Alarm
 ## Requirements
 * Python >= 3.7
 * Python modules:
