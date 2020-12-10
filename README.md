@@ -11,6 +11,7 @@ This python project for my third continuous assessment at Exeter University uses
   * JSON
   * Math
   * Time
+  * Logging
   * Sched
 
 ## Configuration
@@ -20,7 +21,7 @@ You should get API keys from:
 * [NewsAPI](https://newsapi.org/)
 * [Open Weather Map](https://openweathermap.org/)
 
-Also in the config.json file is the location info that the program will use for weather
+Also in the config.json file is the location info that the program will use for weather and the filepath of the logfile
 
 ```JSON
 {
