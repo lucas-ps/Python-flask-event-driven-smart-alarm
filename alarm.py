@@ -33,6 +33,10 @@ def create_announcment(scheduler, date, time, content, alarm_weather = False, al
         tts_announcement = notifications.get_news('gb', True)
         content = (content + tts_announcement)
         logging.info("News brief for "+date,time+" has been added to scheduler")
+        corona_tts_announcement = notifications.get_covid_data(True)
+        content = (content + corona_tts_announcement)
+        logging.info("Covid-19 brief for "+date,time+" has been added to scheduler")
+
     scheduler.enter(delay_in_seconds, 1, ttsannouncement, (content,))
 
 

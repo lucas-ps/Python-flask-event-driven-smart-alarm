@@ -59,7 +59,7 @@ def get_weather(city : str, country : str, tts : bool = False) -> dict:
         error = ("Connection error while fetching weather, check to see if link is still working or if API is down")
         logging.error(error)
         return error
-def get_covid_data() ->dict:
+def get_covid_data(tts : bool = False) ->dict:
     ''' Returns yesterday's covid data including total cases, cases yesterday, cases today '''
     try:
         URL = ('https://api.coronavirus.data.gov.uk//v1/data?filters=areaType=nation;areaName=england&structure={%22date%22:%22date%22,%22newCasesByPublishDate%22:%22newCasesByPublishDate%22,%22cumCasesByPublishDate%22:%22cumCasesByPublishDate%22,%22newDeathsByDeathDate%22:%22newDeathsByDeathDate%22,%22cumDeathsByDeathDate%22:%22cumDeathsByDeathDate%22}')
@@ -70,9 +70,13 @@ def get_covid_data() ->dict:
         new_cases_today = today['newCasesByPublishDate']
         new_cases_yesterday = yesterday['newCasesByPublishDate']
         total_cases_so_far = today['cumCasesByPublishDate']
-        formatted_str = (str(new_cases_today)+" new cases today</br>"+str(new_cases_yesterday)+" new cases yesterday</br>"+str(total_cases_so_far)+' total cases so far')
         logging.debug("Covid-19 data successfully fetched")
-        return formatted_str
+        if tts:
+            formatted_for_tts = ("There have been "+str(new_cases_today)+" new coronavirus cases today in England, up to a total of "+str(total_cases_so_far)+" cases. ")
+            return formatted_for_tts
+        else:
+            formatted_str = (str(new_cases_today)+" new cases today</br>"+str(new_cases_yesterday)+" new cases yesterday</br>"+str(total_cases_so_far)+' total cases so far')
+            return formatted_str
     except ConnectionError:
         error = ("Connection error while fetching covid data, check to see if link is still working or if API is down")
         logging.error(error)
