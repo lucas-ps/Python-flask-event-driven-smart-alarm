@@ -14,7 +14,7 @@ This python project for my third continuous assessment at Exeter University uses
   * Sched
 
 ## Configuration
-The use of APIs in this project requires you to register for and use API keys, the config for which can be found in the config.json file, I have left my API keys in for testing purposes.
+The use of APIs in this project requires you to register for and use API keys, the config for which can be found in the config.json file.
 
 You should get API keys from:
 * [NewsAPI](https://newsapi.org/)
